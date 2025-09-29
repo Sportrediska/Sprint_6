@@ -2,8 +2,10 @@ import time
 
 import pytest
 from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
 
 from pages.order_page import OrderPage
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class TestOrderPage:
@@ -75,9 +77,17 @@ class TestOrderPage:
         order_page.click_button_order()
         order_page.wait_pop_up_confirm()
         order_page.click_pop_up_button_confirm_yes()
-        # todo Проверить, что появилось всплывающее окно с сообщением об успешном создании заказа.
-        # todo Проверить: если нажать на логотип «Самоката», попадёшь на главную страницу «Самоката».
-        # todo Проверить: если нажать на логотип Яндекса, в новом окне через редирект откроется главная страница Дзена.
+        assert order_page.wait_pop_up_success_order()
+
+        order_page.click_button_watch_status()
+        order_page.click_logo_samokat()
+        assert WebDriverWait(self.driver, 3).until(EC.url_to_be(self.BASE_URL))
+
+        order_page.click_logo_yandex()
+        self.driver.switch_to.window(self.driver.window_handles[-1])
+        WebDriverWait(self.driver, 10).until(EC.url_contains('dzen.ru'))
+        current_url = self.driver.current_url
+        assert 'dzen.ru' in current_url
 
     @classmethod
     def teardown_class(cls):

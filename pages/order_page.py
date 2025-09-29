@@ -28,7 +28,12 @@ class OrderPage:
     BUTTON_ORDER = (By.CSS_SELECTOR, ".Order_Buttons__1xGrp .Button_Button__ra12g.Button_Middle__1CSJM:not(.Button_Inverted__3IF-i)")
 
     POP_UP_CONFIRM_ORDER = (By.CLASS_NAME, "Order_Modal__YZ-d3")
-    POP_UP_BUTTON_CONFIRM_YES = (By.CSS_SELECTOR, ".Order_Modal__YZ-d3 .Button_Button__ra12g.Button_Middle__1CSJM")
+    POP_UP_BUTTON_CONFIRM_YES = (By.CSS_SELECTOR, ".Order_Modal__YZ-d3 .Button_Button__ra12g.Button_Middle__1CSJM:not(.Button_Inverted__3IF-i)")
+    POP_UP_SUCCESS_ORDER = (By.CLASS_NAME, "Order_ModalHeader__3FDaJ")
+    BUTTON_WATCH_STATUS = (By.CSS_SELECTOR, ".Order_NextButton__1_rCA .Button_Button__ra12g.Button_Middle__1CSJM")
+
+    LOGO_YANDEX = (By.CLASS_NAME, "Header_LogoYandex__3TSOI")
+    LOGO_SAMOKAT = (By.CLASS_NAME, "Header_LogoScooter__3lsAR")
 
     def __init__(self, driver):
         self.driver = driver
@@ -99,6 +104,18 @@ class OrderPage:
 
     def click_pop_up_button_confirm_yes(self):
         self.driver.find_element(*self.POP_UP_BUTTON_CONFIRM_YES).click()
+
+    def wait_pop_up_success_order(self):
+        return WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(self.POP_UP_SUCCESS_ORDER))
+
+    def click_button_watch_status(self):
+        self.driver.find_element(*self.BUTTON_WATCH_STATUS).click()
+
+    def click_logo_yandex(self):
+        self.driver.find_element(*self.LOGO_YANDEX).click()
+
+    def click_logo_samokat(self):
+        self.driver.find_element(*self.LOGO_SAMOKAT).click()
 
     def fill_order_form(self, name, surname, address, metro, phone, date, days_index, color_index, comment):
         self.wait_order_form()
