@@ -16,16 +16,10 @@ class TestHomePage:
     @allure.title('Проверка на соответствие ответа вопросу в блоке "Вопросы о важном"')
     @pytest.mark.parametrize('faq', Data.faq)
     def test_faq_question_corresponds_answer(self, faq):
-        self.driver.get(Urls.BASE_URL)
         home_page = HomePage(self.driver)
-        home_page.scroll_to_question(faq['index'])
-        home_page.wait_question()
-        question_text = home_page.get_faq_question_text(faq['index'])
-        assert question_text == faq['question']
-        home_page.click_faq_question(faq['index'])
-        home_page.wait_answer()
-        answer_text = home_page.get_faq_answer_text(faq['index'])
-        assert answer_text == faq['answer']
+        home_page.open_page(Urls.BASE_URL)
+        assert home_page.check_question_text(faq['index'], faq['question'])
+        assert home_page.check_answer_text(faq['index'], faq['answer'])
 
     @classmethod
     def teardown_class(cls):

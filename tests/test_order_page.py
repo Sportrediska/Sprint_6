@@ -18,8 +18,8 @@ class TestOrderPage:
 
     @allure.title('Проверка открытия формы заказа по кнопке "Заказать" в header')
     def test_header_button_opens_order_form(self):
-        self.driver.get(Urls.BASE_URL)
         order_page = OrderPage(self.driver)
+        order_page.open_page(Urls.BASE_URL)
         order_page.click_order_header()
         current_url = self.driver.current_url
         expected_url = Urls.ORDER_URL
@@ -28,8 +28,8 @@ class TestOrderPage:
 
     @allure.title('Проверка открытия формы заказа по кнопке "Заказать" в блоке "Как это работает"')
     def test_down_button_opens_order_form(self):
-        self.driver.get(Urls.BASE_URL)
         order_page = OrderPage(self.driver)
+        order_page.open_page(Urls.BASE_URL)
         order_page.scroll_to_order_button_down()
         order_page.click_order_down()
         current_url = self.driver.current_url
@@ -40,8 +40,8 @@ class TestOrderPage:
     @allure.title('Проверка оформления заказа самоката')
     @pytest.mark.parametrize('samokats', Data.samokats)
     def test_make_order_adds_new_samokat(self, samokats):
-        self.driver.get(Urls.ORDER_URL)
         order_page = OrderPage(self.driver)
+        order_page.open_page(Urls.ORDER_URL)
         order_page.fill_order_form(
             samokats['name'],
             samokats['surname'],

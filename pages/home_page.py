@@ -6,27 +6,20 @@ from locators.home_page_locators import HomePageLocators as HPL
 
 class HomePage(BasePage):
 
-    def get_faq_question_text(self, index):
-        return self.driver.find_elements(*HPL.FAQ_QUESTIONS)[index].text
-
-    def get_faq_answer_text(self, index):
-        return self.driver.find_elements(*HPL.FAQ_ANSWERS)[index].text
-
-    def scroll_to_question(self, index):
-        element = self.driver.find_elements(*HPL.FAQ_QUESTIONS)[index]
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-
-    def click_faq_question(self, index):
-        self.driver.find_elements(*HPL.FAQ_QUESTIONS)[index].click()
-
-    def wait_question(self):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_any_elements_located(HPL.FAQ_QUESTIONS))
-
-    def wait_answer(self):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_any_elements_located(HPL.FAQ_ANSWERS))
-
     def click_logo_yandex(self):
         self.driver.find_element(*HPL.LOGO_YANDEX).click()
 
     def click_logo_samokat(self):
         self.driver.find_element(*HPL.LOGO_SAMOKAT).click()
+
+    def check_question_text(self, index, question):
+        self.scroll_to_by_index(HPL.FAQ_QUESTIONS, index)
+        self.wait_any_of_elements(HPL.FAQ_QUESTIONS)
+        question_text = self.get_text_by_index(HPL.FAQ_QUESTIONS, index)
+        return question_text == question
+
+    def check_answer_text(self, index, answer):
+        self.click_by_index(HPL.FAQ_QUESTIONS, index)
+        self.wait_any_of_elements(HPL.FAQ_ANSWERS)
+        answer_text = self.get_text_by_index(HPL.FAQ_ANSWERS, index)
+        return answer_text == answer
