@@ -1,11 +1,10 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators.order_page_locators import OrderPageLocators as OPL
+from pages.base_page import BasePage
 
-class OrderPage:
 
-    def __init__(self, driver):
-        self.driver = driver
+class OrderPage(BasePage):
 
     def click_order_header(self):
         self.driver.find_element(*OPL.ORDER_BUTTON_HEADER).click()
@@ -80,11 +79,7 @@ class OrderPage:
     def click_button_watch_status(self):
         self.driver.find_element(*OPL.BUTTON_WATCH_STATUS).click()
 
-    def click_logo_yandex(self):
-        self.driver.find_element(*OPL.LOGO_YANDEX).click()
 
-    def click_logo_samokat(self):
-        self.driver.find_element(*OPL.LOGO_SAMOKAT).click()
 
     def fill_order_form(self, name, surname, address, metro, phone, date, days_index, color_index, comment):
         self.wait_order_form()

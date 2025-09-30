@@ -26,6 +26,3 @@ class OrderPageLocators:
     POP_UP_BUTTON_CONFIRM_YES = (By.CSS_SELECTOR, ".Order_Modal__YZ-d3 .Button_Button__ra12g.Button_Middle__1CSJM:not(.Button_Inverted__3IF-i)")
     POP_UP_SUCCESS_ORDER = (By.CLASS_NAME, "Order_ModalHeader__3FDaJ")
     BUTTON_WATCH_STATUS = (By.CSS_SELECTOR, ".Order_NextButton__1_rCA .Button_Button__ra12g.Button_Middle__1CSJM")
-
-    LOGO_YANDEX = (By.CLASS_NAME, "Header_LogoYandex__3TSOI")
-    LOGO_SAMOKAT = (By.CLASS_NAME, "Header_LogoScooter__3lsAR")

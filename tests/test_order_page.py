@@ -4,6 +4,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 
+from pages.home_page import HomePage
 from pages.order_page import OrderPage
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -79,11 +80,12 @@ class TestOrderPage:
         order_page.click_pop_up_button_confirm_yes()
         assert order_page.wait_pop_up_success_order()
 
+        home_page = HomePage(self.driver)
         order_page.click_button_watch_status()
-        order_page.click_logo_samokat()
+        home_page.click_logo_samokat()
         assert WebDriverWait(self.driver, 3).until(EC.url_to_be(self.BASE_URL))
 
-        order_page.click_logo_yandex()
+        home_page.click_logo_yandex()
         self.driver.switch_to.window(self.driver.window_handles[-1])
         WebDriverWait(self.driver, 10).until(EC.url_contains('dzen.ru'))
         current_url = self.driver.current_url
