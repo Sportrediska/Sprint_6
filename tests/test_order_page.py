@@ -1,3 +1,4 @@
+import allure
 import pytest
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
@@ -5,7 +6,7 @@ from urls import Urls
 from pages.home_page import HomePage
 from pages.order_page import OrderPage
 from selenium.webdriver.support import expected_conditions as EC
-from data_for_tests import DataForTests as data
+from data_for_tests import DataForTests as Data
 
 
 class TestOrderPage:
@@ -15,6 +16,7 @@ class TestOrderPage:
     def setup_class(cls):
         cls.driver = webdriver.Firefox()
 
+    @allure.title('Проверка открытия формы заказа по кнопке "Заказать" в header')
     def test_header_button_opens_order_form(self):
         self.driver.get(Urls.BASE_URL)
         order_page = OrderPage(self.driver)
@@ -24,6 +26,7 @@ class TestOrderPage:
         assert current_url == expected_url
         assert order_page.wait_order_form()
 
+    @allure.title('Проверка открытия формы заказа по кнопке "Заказать" в блоке "Как это работает"')
     def test_down_button_opens_order_form(self):
         self.driver.get(Urls.BASE_URL)
         order_page = OrderPage(self.driver)
@@ -34,7 +37,8 @@ class TestOrderPage:
         assert current_url == expected_url
         assert order_page.wait_order_form()
 
-    @pytest.mark.parametrize('samokats', data.samokats)
+    @allure.title('Проверка оформления заказа самоката')
+    @pytest.mark.parametrize('samokats', Data.samokats)
     def test_make_order_adds_new_samokat(self, samokats):
         self.driver.get(Urls.ORDER_URL)
         order_page = OrderPage(self.driver)
