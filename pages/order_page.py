@@ -1,23 +1,31 @@
+import allure
+
 from locators.order_page_locators import OrderPageLocators as OPL
 from pages.base_page import BasePage
 
 
 class OrderPage(BasePage):
+
+    @allure.step('Получить URL после клика по кнопке в хедере')
     def get_url_after_click_header_button(self):
         self.click_element(OPL.ORDER_BUTTON_HEADER)
         return self.get_current_url()
 
+    @allure.step('Получить URL после клика по нижней кнопке')
     def get_url_after_click_down_button(self):
         self.scroll_to_element(OPL.ORDER_BUTTON_DOWN)
         self.click_element(OPL.ORDER_BUTTON_DOWN)
         return self.get_current_url()
 
+    @allure.step('Кликнуть кнопку "Посмотреть статус"')
     def click_button_watch_status(self):
         self.click_element(OPL.BUTTON_WATCH_STATUS)
 
+    @allure.step('Ожидать форму заказа')
     def wait_order_form(self):
         return self.wait_of_element(OPL.ORDER_FORM_TITLE_STEP_1)
 
+    @allure.step('Оформить заказ: {name} {surname}')
     def make_order(self, name, surname, address, metro, phone, date, days_index, color_index, comment):
         # fill form step 1
         self.wait_of_element(OPL.ORDER_FORM_TITLE_STEP_1)
@@ -42,5 +50,6 @@ class OrderPage(BasePage):
         self.wait_of_element(OPL.POP_UP_CONFIRM_ORDER)
         self.click_element(OPL.POP_UP_BUTTON_CONFIRM_YES)
 
+    @allure.step('Проверить успешное оформление заказа')
     def check_success_order(self):
         return self.wait_of_element(OPL.POP_UP_SUCCESS_ORDER)
